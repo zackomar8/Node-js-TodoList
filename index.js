@@ -11,23 +11,23 @@ const todoList = new TodoList();
 // Display available operations
 const displayOperations = () => {
   console.log("Available Operations:");
-  console.log("create <task> - Create a new todo");
-  console.log("update <id> <updatedTask> - Update the task of a todo");
-  console.log("delete <id> - Delete a todo");
-  console.log("search <term> - Search todos for a given term");
-  console.log("list - Display all todos");
-  console.log("exit - Exit the app");
+  console.log("Save (the task) - Create a new task");
+  console.log("update (id) <updatedTask> - Update the task of a task");
+  console.log("delete (id) - Delete a task");
+  console.log("find (term) - Search tasks for a given term");
+  console.log("list - Display all tasks");
+  console.log("exit - Exit the program");
   console.log();
 };
 
-// Display the Todo List
+// Display the Tasks
 const displayTodoList = () => {
   const todos = todoList.getAllTodos();
 
   if (todos.length === 0) {
-    console.log("No todos found.");
+    console.log("No tasks found.");
   } else {
-    console.log("Todo List:");
+    console.log("Tasks List:");
     todos.forEach((todo) => {
       console.log(`[${todo.id}] ${todo.task}`);
     });
@@ -35,21 +35,20 @@ const displayTodoList = () => {
   console.log();
 };
 
-// Display available operations and the Todo List
+// Display available operations and the Tasks List
 displayOperations();
 displayTodoList();
 
 // Handle user input
 rl.on("line", (input) => {
-  const command = input.split(" ")[0];
-  const args = input.split(" ").slice(1);
+  const [command, ...args] = input.split(" ");
 
   switch (command) {
-    case "create":
+    case "save":
       const newTask = args.join(" ");
       todoList.createTodo(newTask);
       todoList.saveToFile();
-      console.log("Task created successfully!");
+      console.log("Task saved successfully!");
       break;
     case "update":
       const taskId = parseInt(args[0]);
@@ -72,7 +71,7 @@ rl.on("line", (input) => {
         console.log("Task deleted successfully!");
       }
       break;
-    case "search":
+    case "find":
       const searchTerm = args.join(" ");
 
       const searchResults = todoList.searchTodos(searchTerm);
